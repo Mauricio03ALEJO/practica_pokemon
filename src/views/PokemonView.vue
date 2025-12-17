@@ -1,12 +1,12 @@
 <template>
-  <PokemonView />
+    <Pokemon />
 </template>
 
 <script>
-import PokemonView from './views/PokemonView.vue';
+import Pokemon from '../components/Pokemon.vue';
 export default {
   components: {
-    PokemonView
+    Pokemon
   }
 }
 </script>
