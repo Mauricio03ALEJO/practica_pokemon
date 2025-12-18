@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { consumirAPIFacade } from '../clients/PokeApiClients';
+import { consumirAPIFacade } from '../clients/PokeApiClient';
 import PokemonCard from './PokemonCard.vue';
 import GameMessage from './GameMessage.vue';
 
@@ -50,7 +50,7 @@ export default {
         { imageUrl: 'https://placehold.co/200x200/000000/000000.png', name: 'XXXXXXXXXXX', id: null },
         { imageUrl: 'https://placehold.co/200x200/000000/000000.png', name: 'XXXXXXXXXXX', id: null }
       ],
-      pokemonPool: [1, 2, 3, 4], // Pool fijo de 4 pokemon
+      pokemonPool: [1, 2, 3, 4],
       attempts: 0,
       score: 0,
       gameOver: false,
@@ -63,40 +63,32 @@ export default {
       if (this.attempts >= 5 || this.gameOver) {
         return;
       }
-
-      // Incrementar intentos
       this.attempts++;
 
-      // Seleccionar 3 pokemon aleatorios del pool
       const selectedIds = [];
       for (let i = 0; i < 3; i++) {
         const randomIndex = Math.floor(Math.random() * this.pokemonPool.length);
         selectedIds.push(this.pokemonPool[randomIndex]);
       }
 
-      // Obtener datos de los pokemon
       try {
         const pokemonPromises = selectedIds.map(id => consumirAPIFacade(id));
         const pokemonData = await Promise.all(pokemonPromises);
 
-        // Actualizar las cartas
         this.pokemons = pokemonData.map((data, index) => ({
           imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${selectedIds[index]}.svg`,
           name: data.name.toUpperCase(),
           id: selectedIds[index]
         }));
 
-        // Calcular puntos
         this.calculateScore(selectedIds);
 
-        // Verificar condiciones de fin de juego
         this.checkGameEnd();
       } catch (error) {
         console.error('Error al obtener pokemon:', error);
       }
     },
     calculateScore(selectedIds) {
-      // Contar coincidencias
       const counts = {};
       selectedIds.forEach(id => {
         counts[id] = (counts[id] || 0) + 1;
@@ -105,22 +97,17 @@ export default {
       const maxCount = Math.max(...Object.values(counts));
 
       if (maxCount === 3) {
-        // 3 pokemon iguales
         this.score += 5;
       } else if (maxCount === 2) {
-        // 2 pokemon iguales
         this.score += 2;
       }
-      // Si maxCount === 1, no coincide ninguno, se suma 0
     },
     checkGameEnd() {
-      // Verificar si ganó (10 o más puntos)
       if (this.score >= 10) {
         this.gameOver = true;
         this.showMessage = true;
         this.messageType = 'won';
       }
-      // Verificar si perdió (5 intentos sin llegar a 10 puntos)
       else if (this.attempts >= 5) {
         this.gameOver = true;
         this.showMessage = true;

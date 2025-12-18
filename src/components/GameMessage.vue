@@ -15,7 +15,7 @@ export default {
     },
     messageType: {
       type: String,
-      default: '' // 'lost' o 'won'
+      default: '' 
     },
     score: {
       type: Number,
