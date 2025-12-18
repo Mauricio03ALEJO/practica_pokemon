@@ -53,8 +53,9 @@ export default {
 .game-message {
   margin: 20px 0;
   padding: 20px;
-  border-radius: 10px;
   text-align: center;
+  border: 2px solid #333;
+  border-radius: 10px;
 }
 
 .message-line {

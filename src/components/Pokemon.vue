@@ -149,12 +149,9 @@ export default {
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  font-family: Arial, sans-serif;
 }
 
 h1 {
-  color: #ffcb05;
-  text-shadow: 2px 2px 4px #3d7dca;
   margin-bottom: 20px;
 }
 
@@ -162,7 +159,6 @@ h1 {
   display: flex;
   gap: 30px;
   margin-bottom: 20px;
-  font-size: 18px;
 }
 
 .pokemon-cards {
@@ -170,27 +166,14 @@ h1 {
   justify-content: center;
   gap: 20px;
   margin-bottom: 30px;
-  flex-wrap: wrap;
 }
 
 .play-button {
-  padding: 15px 40px;
-  font-size: 20px;
-  font-weight: bold;
-  background-color: #3d7dca;
-  color: white;
-  border: none;
-  border-radius: 10px;
+  padding: 10px 30px;
   cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.play-button:hover:not(:disabled) {
-  background-color: #2c5fa0;
 }
 
 .play-button:disabled {
-  background-color: #cccccc;
   cursor: not-allowed;
 }
 </style>
